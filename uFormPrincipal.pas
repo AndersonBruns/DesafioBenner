@@ -36,13 +36,15 @@ type
     procedure AlterarTela(NovaTela: integer);    { Seleção de uma nova tela }
     procedure TelaAnterior;                      { Seleciona a tela anterior }
     procedure DiminuiNotas(coValorNota : String; coMenosNota: Integer);
+    procedure TotalNotas(csNota , csRestoAnterior, csRestoAtual ,csValor : Integer);
   end;
 
 var
   FrmPrincipal: TFrmPrincipal;
 
 implementation
-
+//const
+//CNT_FORMATA_MEMO := 'Notas de ' %d: ' + IntToStr(%d);;
 {$R *.dfm}
 
 procedure TFrmPrincipal.AlterarTela(NovaTela: integer);
@@ -152,6 +154,14 @@ begin
   { Seleciona a nova tela }
   AlterarTela(FTelaAnterior);
   SelecionarTela;
+end;
+
+procedure TFrmPrincipal.TotalNotas(csNota, csRestoAnterior, csRestoAtual, csValor: Integer);
+begin
+csNota       := csRestoAnterior div csValor ;
+csRestoAtual := csRestoAnterior mod csValor ;
+FrmPrincipal.DiminuiNotas('Cinquenta Reais', csNota);
+FrmRelatorioSaque.Memo.Text :=  'Nota 50: ' + IntToStr(csNota);
 end;
 
 procedure TFrmPrincipal.DiminuiNotas(coValorNota :String; coMenosNota: Integer);

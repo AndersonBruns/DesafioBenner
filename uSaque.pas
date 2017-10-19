@@ -82,33 +82,31 @@ begin
                r100 := ValorTotal mod 100;
                  if (r100 < 100) and (r100 > 0) then
                    begin
-                    n50 := r100 div 50 ;
-                    r50 := r100 mod 50 ;
-                    FrmPrincipal.DiminuiNotas('Cinquenta Reais', n50);
-
+                    FrmPrincipal.TotalNotas(n50, r100, r50, 50);
+                    //n50 := r100 div 50 ;
+                    //r50 := r100 mod 50 ;
+                    //FrmPrincipal.DiminuiNotas('Cinquenta Reais', n50);
                    end;
                       if (r50 < 50) and (r50 >= 20) then
                         begin
                          n20 := r50 div 20 ;
-                         FrmPrincipal.DiminuiNotas('Vinte Reais', n20);
                          r20 := r50 mod 20 ;
+                         FrmPrincipal.DiminuiNotas('Vinte Reais', n20);
                         end
                         else
                          r20 := r50 ;
                          n20 := 0;
-
-
                           if (r20 < 20) and (r20 > 0)then
                             begin
                               n10 := r20 div 10 ;
-                              FrmPrincipal.DiminuiNotas('Dez Reais', n10);
                               r10 := r20 mod 10 ;
+                              FrmPrincipal.DiminuiNotas('Dez Reais', n10);
                             end;
                               if True then
                                 begin
                                   ShowMessage('Nota 50: ' + IntToStr(n50) +
-                                        ('Nota 20: ' + IntToStr(n20 )+
-                                        ('Nota 10: ' + IntToStr(n10 ))));
+                                             ('Nota 20: ' + IntToStr(n20 )+
+                                             ('Nota 10: ' + IntToStr(n10 ))));
                                         ValorTotal:= 0;
                             end;
 
