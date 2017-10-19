@@ -35,6 +35,7 @@ type
 
     procedure AlterarTela(NovaTela: integer);    { Seleção de uma nova tela }
     procedure TelaAnterior;                      { Seleciona a tela anterior }
+    procedure DiminuiNotas(coValorNota : String; coMenosNota: Integer);
   end;
 
 var
@@ -96,16 +97,8 @@ begin
   CdsAgencias.LogChanges := False;
   CdsContas.LogChanges := False;
   cdsNotas.LogChanges := False;
-
-  CdsNotas.IndexName := 'CEDULAASC';
-
-  if CdsNotas.Locate('CEDULA', 'Cem Reais', [loCaseInsensitive]) then
-    begin
-      CdsNotas.Edit;
-      CdsNotas.FieldByName('QUANTIDADE').AsInteger := CdsNotas.FieldByName('QUANTIDADE').AsInteger - 1;
-      CdsNotas.UpdateRecord;
-    end;
 end;
+
 
 procedure TFrmPrincipal.SelecionarTela;
 begin
@@ -159,6 +152,18 @@ begin
   { Seleciona a nova tela }
   AlterarTela(FTelaAnterior);
   SelecionarTela;
+end;
+
+procedure TFrmPrincipal.DiminuiNotas(coValorNota :String; coMenosNota: Integer);
+begin
+  CdsNotas.IndexName := 'CEDULAASC';
+
+  if CdsNotas.Locate('CEDULA', coValorNota, [loCaseInsensitive]) then
+    begin
+      CdsNotas.Edit;
+      CdsNotas.FieldByName('QUANTIDADE').AsInteger := CdsNotas.FieldByName('QUANTIDADE').AsInteger - coMenosNota;
+      CdsNotas.UpdateRecord;
+    end;
 end;
 
 procedure TFrmPrincipal.FormClose(Sender: TObject;
