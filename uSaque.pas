@@ -72,49 +72,28 @@ procedure TFrmSaque.ValorSaque(ValorTotal: Integer);
 var
   n100,n50,n20,n10,n5,n2,n1 : integer;
   r100,r50,r20,r10,r5,r2,r1 : integer;
-  Alo : String;
 begin
   ValorTotal := StrToInt(PnlValor.Caption);
   while  ValorTotal <> 0 do
-            begin
-               n100 := ValorTotal div 100;
-               FrmPrincipal.DiminuiNotas('Cem Reais', n100);
-               r100 := ValorTotal mod 100;
-                 if (r100 < 100) and (r100 > 0) then
-                   begin
-                    FrmPrincipal.TotalNotas(n50, r100, r50, 50);
-                    //n50 := r100 div 50 ;
-                    //r50 := r100 mod 50 ;
-                    //FrmPrincipal.DiminuiNotas('Cinquenta Reais', n50);
-                   end;
+    begin
+      if ValorTotal > 100 then
+        FrmPrincipal.TotalNotas(n100, ValorTotal, r100, 100)
+          else
+             r100:= ValorTotal ;
+              if (r100 < 100) and (r100 > 0) then
+                FrmPrincipal.TotalNotas(n50, r100, r50, 50)
+                  else
+                    r50 := r100 ;
                       if (r50 < 50) and (r50 >= 20) then
-                        begin
-                         n20 := r50 div 20 ;
-                         r20 := r50 mod 20 ;
-                         FrmPrincipal.DiminuiNotas('Vinte Reais', n20);
-                        end
-                        else
-                         r20 := r50 ;
-                         n20 := 0;
-                          if (r20 < 20) and (r20 > 0)then
-                            begin
-                              n10 := r20 div 10 ;
-                              r10 := r20 mod 10 ;
-                              FrmPrincipal.DiminuiNotas('Dez Reais', n10);
-                            end;
-                              if True then
-                                begin
-                                  ShowMessage('Nota 50: ' + IntToStr(n50) +
-                                             ('Nota 20: ' + IntToStr(n20 )+
-                                             ('Nota 10: ' + IntToStr(n10 ))));
-                                        ValorTotal:= 0;
-                            end;
-
-        end;
+                        FrmPrincipal.TotalNotas(n20, r50, r20, 20)
+                          else
+                            r20 := r50 ;
+                              if (r20 < 20) and (r20 > 0)then
+                                FrmPrincipal.TotalNotas(n10, r20, r10, 10);
+                                  if True then
+                                    Exit;
+    end;
 end;
-
-
-
 
 procedure TFrmSaque.Btn2Click(Sender: TObject);
 begin

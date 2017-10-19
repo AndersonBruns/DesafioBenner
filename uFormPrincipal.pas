@@ -161,7 +161,7 @@ begin
 csNota       := csRestoAnterior div csValor ;
 csRestoAtual := csRestoAnterior mod csValor ;
 FrmPrincipal.DiminuiNotas('Cinquenta Reais', csNota);
-FrmRelatorioSaque.Memo.Text :=  'Nota 50: ' + IntToStr(csNota);
+FrmRelatorioSaque.MandaProMemo('Notas'+ InttoStr(csValor)+ ': ' + IntToStr(csNota));
 end;
 
 procedure TFrmPrincipal.DiminuiNotas(coValorNota :String; coMenosNota: Integer);
@@ -172,6 +172,7 @@ begin
     begin
       CdsNotas.Edit;
       CdsNotas.FieldByName('QUANTIDADE').AsInteger := CdsNotas.FieldByName('QUANTIDADE').AsInteger - coMenosNota;
+      //CdsNotas.FieldByName('CEDULA').AsString :=
       CdsNotas.UpdateRecord;
     end;
 end;

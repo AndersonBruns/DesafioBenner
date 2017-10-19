@@ -34,7 +34,7 @@ end;
 
 procedure TFrmRelatorioSaque.MandaProMemo(csResultado: String);
 begin
-Memo.Text := csResultado;
+Memo.Lines.Add(csResultado)
 end;
 
 end.
