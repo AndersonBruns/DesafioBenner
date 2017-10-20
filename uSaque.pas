@@ -43,6 +43,8 @@ type
   public
     procedure Tecla(Valor: integer);             { Processa a tecla pressionada }
     procedure ValorSaque (ValorTotal : Integer);
+    function TotalNotas(csNota, csRestoAnterior, csRestoAtual, csValor: Integer) : Integer;
+
 var
   FrmRelatorioSaque : TFrmRelatorioSaque;
   end;
@@ -68,6 +70,14 @@ begin
     PnlValor.Caption := PnlValor.Caption + IntToStr(Valor);
 end;
 
+function TFrmSaque.TotalNotas(csNota, csRestoAnterior, csRestoAtual,
+  csValor: Integer): Integer;
+begin
+csNota       := csRestoAnterior div csValor ;
+csRestoAtual := csRestoAnterior mod csValor ;
+Result := csRestoAtual;
+end;
+
 procedure TFrmSaque.ValorSaque(ValorTotal: Integer);
 var
   n100,n50,n20,n10,n5,n2,n1 : integer;
@@ -76,22 +86,16 @@ begin
   ValorTotal := StrToInt(PnlValor.Caption);
   while  ValorTotal <> 0 do
     begin
-      if ValorTotal > 100 then
-        FrmPrincipal.TotalNotas(n100, ValorTotal, r100, 100)
-          else
-             r100:= ValorTotal ;
-              if (r100 < 100) and (r100 > 0) then
-                FrmPrincipal.TotalNotas(n50, r100, r50, 50)
-                  else
-                    r50 := r100 ;
-                      if (r50 < 50) and (r50 >= 20) then
-                        FrmPrincipal.TotalNotas(n20, r50, r20, 20)
-                          else
-                            r20 := r50 ;
-                              if (r20 < 20) and (r20 > 0)then
-                                FrmPrincipal.TotalNotas(n10, r20, r10, 10);
-                                  if True then
-                                    Exit;
+      if ValorTotal >= 100 then
+        ValorTotal:= TotalNotas(n100, ValorTotal, r100, 100) ;
+      if (ValorTotal < 100) and (ValorTotal > 0) then
+        ValorTotal:= TotalNotas(n50, ValorTotal, r50, 50);
+      if (ValorTotal < 50) and (ValorTotal >= 20) then
+        ValorTotal:= TotalNotas(n20, ValorTotal, r20, 20);
+      if (ValorTotal < 20) and (ValorTotal > 0)then
+        ValorTotal:= TotalNotas(n10, ValorTotal, r10, 10);
+      if True then
+        Exit;
     end;
 end;
 
